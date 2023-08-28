@@ -155,7 +155,7 @@ public class Home extends Application {
         //);
         //listView1.setItems(items1);
         listView1 = new ListView<>();
-        
+
 
         substepListView1 = new TreeView<>();
 
@@ -169,7 +169,7 @@ public class Home extends Application {
         treeView1.setMaxHeight(150);
         listView1.setMaxHeight(100);
         substepListView1.setMaxHeight(150);
-        sbComparison=new StringBuffer();
+        sbComparison = new StringBuffer();
         section1.getChildren().addAll(label1, textArea1, buttonArea1, treeView1, listView1, substepListView1);
 
         inputArea.getChildren().add(section1);
@@ -223,7 +223,7 @@ public class Home extends Application {
 
 
         Button compareButton = new Button("Compare");
-        compareButton.setOnAction(event -> compareSections(dmSyncDTOObj1, dmSyncDTOObj2,resultListView));
+        compareButton.setOnAction(event -> compareSections(dmSyncDTOObj1, dmSyncDTOObj2, resultListView));
 
         resultListView = new TextArea();
         resultListView.setWrapText(true);
@@ -268,10 +268,10 @@ public class Home extends Application {
             Pattern ptUserCode = Pattern.compile("\\*([0-9]+)#");
             Matcher mtUserCode = ptUserCode.matcher(rootNode.getBaseNodeDTO().getCode());
             TreeItem<String> treeBaseNodeDTO;
-            if(mtUserCode.find()){
-                treeBaseNodeDTO  = new TreeItem<>(mtUserCode.group(1)+"P"+baseNodeDTO.getPriority()+" [" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
-            }else{
-                 treeBaseNodeDTO = new TreeItem<>(" [" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
+            if (mtUserCode.find()) {
+                treeBaseNodeDTO = new TreeItem<>(mtUserCode.group(1) + "P" + baseNodeDTO.getPriority() + " [" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
+            } else {
+                treeBaseNodeDTO = new TreeItem<>(" [" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
             }
 
             treeView.getRoot().getChildren().add(treeBaseNodeDTO);
@@ -311,13 +311,13 @@ public class Home extends Application {
                 Pattern ptUserCode = Pattern.compile("\\*([0-9]+)#");
                 Matcher mtUserCode = ptUserCode.matcher(item.getCode());
                 TreeItem<String> treeBaseNodeDTO;
-                if(mtUserCode.find()){
+                if (mtUserCode.find()) {
                     //System.out.println("mt"+mtUserCode.group(1));
-                    newItem  = new TreeItem<>(mtUserCode.group(1)+"P"+item.getPriority()+" [" + item.getCode() + "] " + item.getName());
-                }else{
+                    newItem = new TreeItem<>(mtUserCode.group(1) + "P" + item.getPriority() + " [" + item.getCode() + "] " + item.getName());
+                } else {
                     newItem = new TreeItem<>(" [" + item.getCode() + "] " + item.getName());
                 }
-               // TreeItem<String> newItem = new TreeItem<>("[" + item.getCode() + "] " + item.getName());
+                // TreeItem<String> newItem = new TreeItem<>("[" + item.getCode() + "] " + item.getName());
                 treeItem.getChildren().add(newItem);
                 ConstraintNodeDTO cloneItem = item.clone();
                 cloneItem.setChildList(null);
@@ -422,18 +422,18 @@ public class Home extends Application {
             }
         }*/
         List<KeyValueEntry> keyValueList = new ArrayList<>();
-        keyValueList.add(new KeyValueEntry("Name: ",constraintNodeDTO.getName()));
-        keyValueList.add(new KeyValueEntry("Code: ",constraintNodeDTO.getCode()));
+        keyValueList.add(new KeyValueEntry("Name: ", constraintNodeDTO.getName()));
+        keyValueList.add(new KeyValueEntry("Code: ", constraintNodeDTO.getCode()));
         keyValueList.add(new KeyValueEntry("Priority: ", String.valueOf(constraintNodeDTO.getPriority())));
-        keyValueList.add(new KeyValueEntry("Policy: ",constraintNodeDTO.getPolicy()));
-        keyValueList.add(new KeyValueEntry("Action: ",constraintNodeDTO.getAction()));
-        keyValueList.add(new KeyValueEntry("Entity Val[Product Id]: ",constraintNodeDTO.getEntityValue()));
-        keyValueList.add(new KeyValueEntry("Arabic Disp Name: ",constraintNodeDTO.getAddInfo().getAddInfoMap().get("ARABIC_DISPLAY_NAME")));
-        keyValueList.add(new KeyValueEntry("Hindi Disp Name: ",constraintNodeDTO.getAddInfo().getAddInfoMap().get("HINDI_DISPLAY_NAME")));
-        keyValueList.add(new KeyValueEntry("Other Disp Name: ",constraintNodeDTO.getAddInfo().getAddInfoMap().get("OTHERLANGUAGE_DISPLAY_NAME")));
-        keyValueList.add(new KeyValueEntry("Alias Code Channel: ",constraintNodeDTO.getAliasCodeDTO().getChannelName()));
-        keyValueList.add(new KeyValueEntry("Alias Orig Code: ",constraintNodeDTO.getAliasCodeDTO().getCode()));
-        keyValueList.add(new KeyValueEntry("Alias Code: ",constraintNodeDTO.getAliasCodeDTO().getAlias()));
+        keyValueList.add(new KeyValueEntry("Policy: ", constraintNodeDTO.getPolicy()));
+        keyValueList.add(new KeyValueEntry("Action: ", constraintNodeDTO.getAction()));
+        keyValueList.add(new KeyValueEntry("Entity Val[Product Id]: ", constraintNodeDTO.getEntityValue()));
+        keyValueList.add(new KeyValueEntry("Arabic Disp Name: ", constraintNodeDTO.getAddInfo().getAddInfoMap().get("ARABIC_DISPLAY_NAME")));
+        keyValueList.add(new KeyValueEntry("Hindi Disp Name: ", constraintNodeDTO.getAddInfo().getAddInfoMap().get("HINDI_DISPLAY_NAME")));
+        keyValueList.add(new KeyValueEntry("Other Disp Name: ", constraintNodeDTO.getAddInfo().getAddInfoMap().get("OTHERLANGUAGE_DISPLAY_NAME")));
+        keyValueList.add(new KeyValueEntry("Alias Code Channel: ", constraintNodeDTO.getAliasCodeDTO().getChannelName()));
+        keyValueList.add(new KeyValueEntry("Alias Orig Code: ", constraintNodeDTO.getAliasCodeDTO().getCode()));
+        keyValueList.add(new KeyValueEntry("Alias Code: ", constraintNodeDTO.getAliasCodeDTO().getAlias()));
 
         ObservableList<KeyValueEntry> items = FXCollections.observableArrayList(keyValueList);
         listView.setItems(items);
@@ -498,7 +498,7 @@ public class Home extends Application {
     }
 
 
-    private void compareSections(DMSyncDTO dmSyncDTO1, DMSyncDTO dmSyncDTO2,TextArea resultTextArea) {
+    private void compareSections(DMSyncDTO dmSyncDTO1, DMSyncDTO dmSyncDTO2, TextArea resultTextArea) {
         if (dmSyncDTO1 != null && dmSyncDTO2 != null) {
             //Compare Static Params
             compareConstraintNodeDTO(dmSyncDTO1.getBaseNodeDTO(), dmSyncDTO2.getBaseNodeDTO());
@@ -519,75 +519,140 @@ public class Home extends Application {
             if (constraintNodeDTO1.getCode().equals(constraintNodeDTO2.getCode())) {
                 //Attribute level checks
 
-                if(!(constraintNodeDTO1.getName().equals(constraintNodeDTO2.getName()))){
-                    sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Name: "+constraintNodeDTO1.getName()+" Obj2 --> Name: "+constraintNodeDTO2.getName());
+                if (!(constraintNodeDTO1.getName().equals(constraintNodeDTO2.getName()))) {
+                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Name: " + constraintNodeDTO1.getName() + " Obj2 --> Name: " + constraintNodeDTO2.getName());
                 }
-                if(!(constraintNodeDTO1.getPriority()==constraintNodeDTO2.getPriority())){
-                    sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Priority: "+constraintNodeDTO1.getPriority()+" Obj2 --> Priority: "+constraintNodeDTO2.getPriority());
+                if (!(constraintNodeDTO1.getPriority() == constraintNodeDTO2.getPriority())) {
+                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Priority: " + constraintNodeDTO1.getPriority() + " Obj2 --> Priority: " + constraintNodeDTO2.getPriority());
                 }
-                if(!(constraintNodeDTO1.getLevel()==constraintNodeDTO2.getLevel())){
-                    sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Level: "+constraintNodeDTO1.getLevel()+" Obj2 --> Level: "+constraintNodeDTO2.getLevel());
+                if (!(constraintNodeDTO1.getLevel() == constraintNodeDTO2.getLevel())) {
+                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Level: " + constraintNodeDTO1.getLevel() + " Obj2 --> Level: " + constraintNodeDTO2.getLevel());
 
                 }
 
                 //Policy Check with Nulls
-                if(constraintNodeDTO1.getPolicy()==null && constraintNodeDTO2.getPolicy()==null){
-                        //Skip
-                }else{
-                    if(constraintNodeDTO1.getPolicy()==null && constraintNodeDTO2.getPolicy()!=null){
-                        sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Policy: "+constraintNodeDTO1.getPolicy()+" Obj2 --> Policy: "+constraintNodeDTO2.getPolicy());
+                if (constraintNodeDTO1.getPolicy() == null && constraintNodeDTO2.getPolicy() == null) {
+                    //Skip
+                } else {
+                    if (constraintNodeDTO1.getPolicy() == null && constraintNodeDTO2.getPolicy() != null) {
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Policy: " + constraintNodeDTO1.getPolicy() + " Obj2 --> Policy: " + constraintNodeDTO2.getPolicy());
                     }
-                    if(constraintNodeDTO1.getPolicy()!=null && constraintNodeDTO2.getPolicy()==null){
-                        sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Policy: "+constraintNodeDTO1.getPolicy()+" Obj2 --> Policy: "+constraintNodeDTO2.getPolicy());
-                    }
-                    else if(!(constraintNodeDTO1.getPolicy().equals(constraintNodeDTO2.getPolicy()))){
-                        sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Policy: "+constraintNodeDTO1.getPolicy()+" Obj2 --> Policy: "+constraintNodeDTO2.getPolicy());
+                    if (constraintNodeDTO1.getPolicy() != null && constraintNodeDTO2.getPolicy() == null) {
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Policy: " + constraintNodeDTO1.getPolicy() + " Obj2 --> Policy: " + constraintNodeDTO2.getPolicy());
+                    } else if (!(constraintNodeDTO1.getPolicy().equals(constraintNodeDTO2.getPolicy()))) {
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Policy: " + constraintNodeDTO1.getPolicy() + " Obj2 --> Policy: " + constraintNodeDTO2.getPolicy());
                     }
                 }
                 //Action Check with Nulls
-                if(constraintNodeDTO1.getAction()==null && constraintNodeDTO2.getAction()==null){
+                if (constraintNodeDTO1.getAction() == null && constraintNodeDTO2.getAction() == null) {
                     //Skip
-                }else{
-                    if(constraintNodeDTO1.getAction()==null && constraintNodeDTO2.getAction()!=null){
-                        sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Action: "+constraintNodeDTO1.getAction()+" Obj2 --> Action: "+constraintNodeDTO2.getAction());
+                } else {
+                    if (constraintNodeDTO1.getAction() == null && constraintNodeDTO2.getAction() != null) {
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Action: " + constraintNodeDTO1.getAction() + " Obj2 --> Action: " + constraintNodeDTO2.getAction());
                     }
-                    if(constraintNodeDTO1.getAction()!=null && constraintNodeDTO2.getAction()==null){
-                        sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Action: "+constraintNodeDTO1.getAction()+" Obj2 --> Action: "+constraintNodeDTO2.getAction());
-                    }
-                    else if(!(constraintNodeDTO1.getAction().equals(constraintNodeDTO2.getAction()))){
-                        sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Action: "+constraintNodeDTO1.getAction()+" Obj2 --> Action: "+constraintNodeDTO2.getAction());
+                    if (constraintNodeDTO1.getAction() != null && constraintNodeDTO2.getAction() == null) {
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Action: " + constraintNodeDTO1.getAction() + " Obj2 --> Action: " + constraintNodeDTO2.getAction());
+                    } else if (!(constraintNodeDTO1.getAction().equals(constraintNodeDTO2.getAction()))) {
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Action: " + constraintNodeDTO1.getAction() + " Obj2 --> Action: " + constraintNodeDTO2.getAction());
                     }
                 }
-                if(!(constraintNodeDTO1.getProductId()==constraintNodeDTO2.getProductId())){
-                    sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Product ID: "+constraintNodeDTO1.getProductId()+" Obj2 --> Product ID: "+constraintNodeDTO2.getProductId());
+                if (!(constraintNodeDTO1.getProductId() == constraintNodeDTO2.getProductId())) {
+                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Product ID: " + constraintNodeDTO1.getProductId() + " Obj2 --> Product ID: " + constraintNodeDTO2.getProductId());
                 }
                 //Entity Value Check with Nulls
-                if(constraintNodeDTO1.getEntityValue()==null && constraintNodeDTO2.getEntityValue()==null){
+                if (constraintNodeDTO1.getEntityValue() == null && constraintNodeDTO2.getEntityValue() == null) {
                     //Skip
-                }else{
-                    if(constraintNodeDTO1.getEntityValue()==null && constraintNodeDTO2.getEntityValue()!=null){
-                        sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Entity Value: "+constraintNodeDTO1.getEntityValue()+" Obj2 --> Entity Value: "+constraintNodeDTO2.getEntityValue());
+                } else {
+                    if (constraintNodeDTO1.getEntityValue() == null && constraintNodeDTO2.getEntityValue() != null) {
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Entity Value: " + constraintNodeDTO1.getEntityValue() + " Obj2 --> Entity Value: " + constraintNodeDTO2.getEntityValue());
                     }
-                    if(constraintNodeDTO1.getEntityValue()!=null && constraintNodeDTO2.getEntityValue()==null){
-                        sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Entity Value: "+constraintNodeDTO1.getEntityValue()+" Obj2 --> Entity Value: "+constraintNodeDTO2.getEntityValue());
-                    }
-                    else if(!(constraintNodeDTO1.getEntityValue().equals(constraintNodeDTO2.getEntityValue()))){
-                        sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Entity Value: "+constraintNodeDTO1.getEntityValue()+" Obj2 --> Entity Value: "+constraintNodeDTO2.getEntityValue());
+                    if (constraintNodeDTO1.getEntityValue() != null && constraintNodeDTO2.getEntityValue() == null) {
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Entity Value: " + constraintNodeDTO1.getEntityValue() + " Obj2 --> Entity Value: " + constraintNodeDTO2.getEntityValue());
+                    } else if (!(constraintNodeDTO1.getEntityValue().equals(constraintNodeDTO2.getEntityValue()))) {
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Entity Value: " + constraintNodeDTO1.getEntityValue() + " Obj2 --> Entity Value: " + constraintNodeDTO2.getEntityValue());
                     }
                 }
-                if(constraintNodeDTO1.getAddInfo().equals(constraintNodeDTO2.getAddInfo())){
+                if (constraintNodeDTO1.getAddInfo().equals(constraintNodeDTO2.getAddInfo())) {
                     //Skip
-                }else{
-                    sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Additional Info Map: "+constraintNodeDTO1.getAddInfo()+" Obj2 --> Additional Info Map: "+constraintNodeDTO2.getAddInfo());
+                } else {
+                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Additional Info Map: " + constraintNodeDTO1.getAddInfo() + " Obj2 --> Additional Info Map: " + constraintNodeDTO2.getAddInfo());
+                }
+
+                if (constraintNodeDTO1.getStepList() != null && constraintNodeDTO2.getStepList() != null) {
+                    //Check No. of Steps are equal
+                    if(constraintNodeDTO1.getStepList().size()==constraintNodeDTO2.getStepList().size()){
+                        //For each step
+                        for (ConstraintStepDTO constraintStepDTO1 : constraintNodeDTO1.getStepList()) {
+                            for (ConstraintStepDTO constraintStepDTO2 : constraintNodeDTO2.getStepList()) {
+                                    if (!(constraintStepDTO1.getOperator().contentEquals(constraintStepDTO2.getOperator()))) {
+                                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Step --> " + " obj1 --> Operator: " + constraintStepDTO1.getOperator() + " Obj2 --> Operator: " + constraintStepDTO2.getOperator());
+                                    }
+                                    if (constraintStepDTO1.getSubStepDTOList() != null && constraintStepDTO2.getSubStepDTOList() != null) {
+                                        //For each sub-step
+                                        for (SubStepConstraintDTO subStepConstraintDTO1 : constraintStepDTO1.getSubStepDTOList()) {
+                                            for (SubStepConstraintDTO subStepConstraintDTO2 : constraintStepDTO2.getSubStepDTOList()) {
+
+                                                if (!(subStepConstraintDTO1.getOperator().contentEquals(subStepConstraintDTO2.getOperator()))) {
+                                                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Operator: " + subStepConstraintDTO1.getOperator() + " Obj2 --> Operator: " + subStepConstraintDTO1.getOperator());
+                                                }
+                                                if (subStepConstraintDTO1.getCondition() != subStepConstraintDTO2.getCondition()) {
+                                                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Condition: " + subStepConstraintDTO1.getCondition() + " Obj2 --> Condition: " + subStepConstraintDTO1.getCondition());
+                                                }
+                                                if (!(subStepConstraintDTO1.getPossibleValuesList().equals(subStepConstraintDTO2.getPossibleValuesList()))) {
+                                                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Possible Value List: " + subStepConstraintDTO1.getPossibleValuesList() + " Obj2 --> Possible Value List: " + subStepConstraintDTO1.getPossibleValuesList());
+                                                }
+                                                if (!(subStepConstraintDTO1.getPossibleValues().contentEquals(subStepConstraintDTO2.getPossibleValues()))) {
+                                                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Possible Value: " + subStepConstraintDTO1.getPossibleValues() + " Obj2 --> Possible Value: " + subStepConstraintDTO1.getPossibleValues());
+                                                }
+                                                if (!(subStepConstraintDTO1.getDataType().contentEquals(subStepConstraintDTO2.getDataType()))) {
+                                                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Data Type: " + subStepConstraintDTO1.getDataType() + " Obj2 --> Data Type: " + subStepConstraintDTO1.getDataType());
+                                                }
+                                                if (!(subStepConstraintDTO1.getCommandName().contentEquals(subStepConstraintDTO2.getCommandName()))) {
+                                                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Command Name: " + subStepConstraintDTO1.getCommandName() + " Obj2 --> Command Name: " + subStepConstraintDTO1.getCommandName());
+                                                }
+                                                if (!(subStepConstraintDTO1.getConditionName().contentEquals(subStepConstraintDTO2.getConditionName()))) {
+                                                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Condition Name: " + subStepConstraintDTO1.getConditionName() + " Obj2 --> Condition Name: " + subStepConstraintDTO1.getConditionName());
+                                                }
+                                                if (!(subStepConstraintDTO1.getFullyQualifiedPath().contentEquals(subStepConstraintDTO2.getFullyQualifiedPath()))) {
+                                                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Fully Qualified Path: " + subStepConstraintDTO1.getFullyQualifiedPath() + " Obj2 --> Fully Qualified Path: " + subStepConstraintDTO1.getFullyQualifiedPath());
+                                                }
+                                                if (!(subStepConstraintDTO1.getCommandParameterName().contentEquals(subStepConstraintDTO2.getCommandParameterName()))) {
+                                                    sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Command Param name: " + subStepConstraintDTO1.getCommandParameterName() + " Obj2 --> Command Param Name: " + subStepConstraintDTO1.getCommandParameterName());
+                                                }
+
+                                            }
+                                        }
+                                    } else if (constraintStepDTO1.getSubStepDTOList() == null && constraintStepDTO2.getSubStepDTOList() != null) {
+                                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Substep list is null where as obj2 --> has substeps");
+                                    } else if (constraintStepDTO1.getSubStepDTOList() != null && constraintStepDTO2.getSubStepDTOList() == null) {
+                                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Substep --> " + " obj1 --> Substep list has substeps where as obj2 --> is null");
+                                    } else {
+                                        //Skip
+                                    }
+
+
+                            }
+                        }
+                    }else{
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " Constaint Step Count --> obj1 --> has: " + constraintNodeDTO1.getStepList().size() + " vs Obj2 --> : " + constraintNodeDTO2.getStepList().size());
+                    }
+
+                } else if (constraintNodeDTO1.getStepList() != null && constraintNodeDTO2.getStepList() == null) {
+
+                } else if (constraintNodeDTO1.getStepList() == null && constraintNodeDTO2.getStepList() != null) {
+
+                } else {
+                    //Skip
                 }
 
                 if (constraintNodeDTO1.getChildList() != null && constraintNodeDTO2.getChildList() != null) {
                     if (constraintNodeDTO1.getChildList().size() == constraintNodeDTO2.getChildList().size()) {
                         //Skip
                     } else {
-                        sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Has no. of child: "+constraintNodeDTO1.getChildList().size()+" vs Obj2 --> no. of child: "+constraintNodeDTO1.getChildList().size());
+                        sbComparison.append("\nDiff found " + constraintNodeDTO1.getCode() + " obj1 --> Has no. of child: " + constraintNodeDTO1.getChildList().size() + " vs Obj2 --> no. of child: " + constraintNodeDTO1.getChildList().size());
                     }
                 }
+
                 //System.out.println(sbComparison);
                 if (constraintNodeDTO1.getChildList() != null && constraintNodeDTO2.getChildList() != null) {
                     for (ConstraintNodeDTO node1 : constraintNodeDTO1.getChildList()) {
