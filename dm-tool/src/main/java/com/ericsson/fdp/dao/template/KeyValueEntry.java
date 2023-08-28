@@ -15,10 +15,8 @@ public class KeyValueEntry {
 
     @Override
     public String toString() {
-        return "" +
-                "'" + key + '\'' +
-                "--> '" + value + '\'' +
-                ' ';
+        return "" + key +
+                "--> '" + value+"'";
     }
 
     public String getKey() {

@@ -20,6 +20,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import org.apache.tomcat.util.bcel.Const;
@@ -264,8 +265,15 @@ public class Home extends Application {
             }
             ConstraintNodeDTO baseNodeDTO;
             baseNodeDTO = rootNode.getBaseNodeDTO();
+            Pattern ptUserCode = Pattern.compile("\\*([0-9]+)#");
+            Matcher mtUserCode = ptUserCode.matcher(rootNode.getBaseNodeDTO().getCode());
+            TreeItem<String> treeBaseNodeDTO;
+            if(mtUserCode.find()){
+                treeBaseNodeDTO  = new TreeItem<>(mtUserCode.group(1)+"P"+baseNodeDTO.getPriority()+" [" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
+            }else{
+                 treeBaseNodeDTO = new TreeItem<>(" [" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
+            }
 
-            TreeItem<String> treeBaseNodeDTO = new TreeItem<>("[" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
             treeView.getRoot().getChildren().add(treeBaseNodeDTO);
             ConstraintNodeDTO cloneItem = baseNodeDTO.clone();
             cloneItem.setChildList(null);
@@ -298,8 +306,18 @@ public class Home extends Application {
 
     private void getTreeItems(ConstraintNodeDTO noConstraintNodeDTO, TreeItem<String> treeItem, List<ConstraintNodeDTO> treeItemsList, List<ConstraintNodeDTO> treeItemsList_a) throws CloneNotSupportedException {
         if (noConstraintNodeDTO.getChildList() != null) {
+            TreeItem<String> newItem;
             for (ConstraintNodeDTO item : noConstraintNodeDTO.getChildList()) {
-                TreeItem<String> newItem = new TreeItem<>("[" + item.getCode() + "] " + item.getName());
+                Pattern ptUserCode = Pattern.compile("\\*([0-9]+)#");
+                Matcher mtUserCode = ptUserCode.matcher(item.getCode());
+                TreeItem<String> treeBaseNodeDTO;
+                if(mtUserCode.find()){
+                    //System.out.println("mt"+mtUserCode.group(1));
+                    newItem  = new TreeItem<>(mtUserCode.group(1)+"P"+item.getPriority()+" [" + item.getCode() + "] " + item.getName());
+                }else{
+                    newItem = new TreeItem<>(" [" + item.getCode() + "] " + item.getName());
+                }
+               // TreeItem<String> newItem = new TreeItem<>("[" + item.getCode() + "] " + item.getName());
                 treeItem.getChildren().add(newItem);
                 ConstraintNodeDTO cloneItem = item.clone();
                 cloneItem.setChildList(null);
@@ -363,21 +381,7 @@ public class Home extends Application {
     }
 
     private void displayObjectProperties(ListView<KeyValueEntry> listView, ConstraintNodeDTO constraintNodeDTO, TreeView<String> substepListView) {
-        List<KeyValueEntry> keyValueList = new ArrayList<>();
 
-        // Get all the declared fields of the ConstraintNodeDTO class, including inherited fields
-        Field[] fields = constraintNodeDTO.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            String fieldName = field.getName();
-            Object fieldValue;
-            try {
-                fieldValue = field.get(constraintNodeDTO);
-            } catch (IllegalAccessException e) {
-                fieldValue = "Error accessing field";
-            }
-            keyValueList.add(new KeyValueEntry(fieldName, fieldValue != null ? fieldValue.toString() : "null"));
-        }
         substepListView.setRoot(null);
         TreeItem<String> substepRoot = new TreeItem<>("Constraints");
         if (constraintNodeDTO.getStepList() != null) {
@@ -402,7 +406,7 @@ public class Home extends Application {
         }
 
         // Get the fields from the parent class NoConstraintNodeDTO
-        Class<?> parentClass = constraintNodeDTO.getClass().getSuperclass();
+       /* Class<?> parentClass = constraintNodeDTO.getClass().getSuperclass();
         if (parentClass != null && parentClass.isAssignableFrom(NoConstraintNodeDTO.class)) {
             Field[] parentFields = parentClass.getDeclaredFields();
             for (Field field : parentFields) {
@@ -416,7 +420,20 @@ public class Home extends Application {
                 }
                 keyValueList.add(new KeyValueEntry(fieldName, fieldValue != null ? fieldValue.toString() : "null"));
             }
-        }
+        }*/
+        List<KeyValueEntry> keyValueList = new ArrayList<>();
+        keyValueList.add(new KeyValueEntry("Name: ",constraintNodeDTO.getName()));
+        keyValueList.add(new KeyValueEntry("Code: ",constraintNodeDTO.getCode()));
+        keyValueList.add(new KeyValueEntry("Priority: ", String.valueOf(constraintNodeDTO.getPriority())));
+        keyValueList.add(new KeyValueEntry("Policy: ",constraintNodeDTO.getPolicy()));
+        keyValueList.add(new KeyValueEntry("Action: ",constraintNodeDTO.getAction()));
+        keyValueList.add(new KeyValueEntry("Entity Val[Product Id]: ",constraintNodeDTO.getEntityValue()));
+        keyValueList.add(new KeyValueEntry("Arabic Disp Name: ",constraintNodeDTO.getAddInfo().getAddInfoMap().get("ARABIC_DISPLAY_NAME")));
+        keyValueList.add(new KeyValueEntry("Hindi Disp Name: ",constraintNodeDTO.getAddInfo().getAddInfoMap().get("HINDI_DISPLAY_NAME")));
+        keyValueList.add(new KeyValueEntry("Other Disp Name: ",constraintNodeDTO.getAddInfo().getAddInfoMap().get("OTHERLANGUAGE_DISPLAY_NAME")));
+        keyValueList.add(new KeyValueEntry("Alias Code Channel: ",constraintNodeDTO.getAliasCodeDTO().getChannelName()));
+        keyValueList.add(new KeyValueEntry("Alias Orig Code: ",constraintNodeDTO.getAliasCodeDTO().getCode()));
+        keyValueList.add(new KeyValueEntry("Alias Code: ",constraintNodeDTO.getAliasCodeDTO().getAlias()));
 
         ObservableList<KeyValueEntry> items = FXCollections.observableArrayList(keyValueList);
         listView.setItems(items);
@@ -571,7 +588,7 @@ public class Home extends Application {
                         sbComparison.append("\nDiff found "+constraintNodeDTO1.getCode()+" obj1 --> Has no. of child: "+constraintNodeDTO1.getChildList().size()+" vs Obj2 --> no. of child: "+constraintNodeDTO1.getChildList().size());
                     }
                 }
-                System.out.println(sbComparison);
+                //System.out.println(sbComparison);
                 if (constraintNodeDTO1.getChildList() != null && constraintNodeDTO2.getChildList() != null) {
                     for (ConstraintNodeDTO node1 : constraintNodeDTO1.getChildList()) {
                         for (ConstraintNodeDTO node2 : constraintNodeDTO2.getChildList()) {

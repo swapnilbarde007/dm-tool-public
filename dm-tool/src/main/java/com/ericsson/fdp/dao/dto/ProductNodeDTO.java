@@ -30,65 +30,6 @@ public class ProductNodeDTO extends NoConstraintNodeDTO{
     }
 
     @Override
-    public String toString() {
-        return "ProductNodeDTO{" +
-                ", createdBy='" + createdBy + '\'' +
-                ", modifiedBy='" + modifiedBy + '\'' +
-                ", id=" + id +
-                ", code='" + code + '\'' +
-                ", visibility=" + visibility +
-                ", aliasCode='" + aliasCode + '\'' +
-                ", name='" + name + '\'' +
-                ", defaultOption='" + defaultOption + '\'' +
-                ", channelName='" + channelName + '\'' +
-                ", isActive=" + isActive +
-                ", priority=" + priority +
-                ", level=" + level +
-                ", status=" + status +
-                ", parentId=" + parentId +
-                ", circle='" + circle + '\'' +
-                ", shortCode='" + shortCode + '\'' +
-                ", policy='" + policy + '\'' +
-                ", childList=" + childList +
-                ", addInfo=" + addInfo +
-                ", aliasCodeDTO=" + aliasCodeDTO +
-                ", loanSuccessNotificationId=" + loanSuccessNotificationId +
-                ", codNotificationId=" + codNotificationId +
-                ", loanFailureNotificationId=" + loanFailureNotificationId +
-                ", codSuccessNotificationId=" + codSuccessNotificationId +
-                ", rootNodeUSSDCode='" + rootNodeUSSDCode + '\'' +
-                ", rootNodeName='" + rootNodeName + '\'' +
-                ", mainMenuPriority=" + mainMenuPriority +
-                ", mainMenuHeader='" + mainMenuHeader + '\'' +
-                ", subMenuPriority=" + subMenuPriority +
-                ", subMenuHeader='" + subMenuHeader + '\'' +
-                ", subSubMenuPriority=" + subSubMenuPriority +
-                ", subSubMenuHeader='" + subSubMenuHeader + '\'' +
-                ", subSubSubMenuHeader='" + subSubSubMenuHeader + '\'' +
-                ", subSubSubMenuPriority=" + subSubSubMenuPriority +
-                ", parentCode='" + parentCode + '\'' +
-                ", productDisplayName='" + productDisplayName + '\'' +
-                ", productDispalyNameOnWEB='" + productDispalyNameOnWEB + '\'' +
-                ", productDisplayNameOnUSSD='" + productDisplayNameOnUSSD + '\'' +
-                ", action='" + action + '\'' +
-                ", productId=" + productId +
-                ", dmChannelType='" + dmChannelType + '\'' +
-                ", mainMenuUSSDCode='" + mainMenuUSSDCode + '\'' +
-                ", subMenuUSSDCode='" + subMenuUSSDCode + '\'' +
-                ", subSubMenuUSSDCode='" + subSubMenuUSSDCode + '\'' +
-                ", subSubSubMenuUSSDCode='" + subSubSubMenuUSSDCode + '\'' +
-                ", menuType='" + menuType + '\'' +
-                ", defaultOptionH='" + defaultOptionH + '\'' +
-                ", defaultOptionArabic='" + defaultOptionArabic + '\'' +
-                ", defaultOptionOtherLanguage='" + defaultOptionOtherLanguage + '\'' +
-                ", directExecutionNodem=" + directExecutionNodem +
-                ", autoExecute=" + autoExecute +
-                ", rootNodeId=" + rootNodeId +
-                ", whitelisted=" + whitelisted +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if(super.equals(o)){
             if (this == o) return true;
