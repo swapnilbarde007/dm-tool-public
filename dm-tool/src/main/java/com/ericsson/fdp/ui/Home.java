@@ -18,9 +18,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import org.apache.tomcat.util.bcel.Const;
@@ -112,6 +117,29 @@ public class Home extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        //Formatting
+        // Fonts
+        Font font = Font.font("Arial", FontWeight.NORMAL, 14);
+
+        // Colors
+        Color foregroundColor = Color.WHITE;
+        Color backgroundColor = Color.rgb(50, 30, 40);
+        Color buttonColor = Color.rgb(70, 130, 180);
+        Color buttonTextColor = Color.WHITE;
+        Color textAreaBackgroundColor = Color.rgb(60, 60, 60);
+        Color textAreaTextColor = Color.WHITE;
+        Color treeViewColor = Color.rgb(90, 90, 90);
+        Color listViewColor = Color.rgb(80, 80, 80);
+
+
+
+
+
+
+
+
+
+
         configurableApplicationContext.publishEvent(new StageReadyEvent(stage));
         //Initialization
         stage.setTitle("Spring Boot JavaFX Example");
@@ -132,6 +160,8 @@ public class Home extends Application {
         Label label1 = new Label("Enter DM Object:");
 
         TextArea textArea1 = new TextArea();
+        textArea1.setFont(font);
+        textArea1.setBackground(new Background(new BackgroundFill(textAreaBackgroundColor, null, null)));
         textArea1.setWrapText(true);
 
         HBox buttonArea1 = new HBox(10);
@@ -139,6 +169,14 @@ public class Home extends Application {
 
         Button processButton1 = new Button("Process");
         Button clearButton1 = new Button("Clear");
+
+        processButton1.setFont(font);
+        processButton1.setTextFill(buttonTextColor);
+        processButton1.setBackground(new Background(new BackgroundFill(buttonColor, null, null)));
+
+        clearButton1.setFont(font);
+        clearButton1.setTextFill(buttonTextColor);
+        clearButton1.setBackground(new Background(new BackgroundFill(buttonColor, null, null)));
 
         buttonArea1.getChildren().addAll(processButton1, clearButton1);
 
@@ -153,6 +191,7 @@ public class Home extends Application {
         //);
         //listView1.setItems(items1);
         listView1 = new ListView<>();
+        listView1.setStyle("-fx-background-color: " + listViewColor.toString() + ";");
 
 
         substepListView1 = new TreeView<>();
@@ -161,12 +200,12 @@ public class Home extends Application {
         TreeItem<String> rootItem1 = new TreeItem<>("UAE");
         treeView1.setRoot(rootItem1);
         processButton1.setOnAction(event -> processTextArea(textArea1, treeView1, 0));
-        clearButton1.setOnAction(event -> textArea1.clear());
+        clearButton1.setOnAction(event -> clearTxt(textArea1));
         //compareButton.setOnAction(event -> compareSections());
-        textArea1.setMaxHeight(100);
-        treeView1.setMaxHeight(150);
+        textArea1.setMaxHeight(60);
+        treeView1.setMaxHeight(100);
         listView1.setMaxHeight(100);
-        substepListView1.setMaxHeight(150);
+        substepListView1.setMaxHeight(100);
         sbComparison = new StringBuffer();
         section1.getChildren().addAll(label1, textArea1, buttonArea1, treeView1, listView1, substepListView1);
 
@@ -180,9 +219,20 @@ public class Home extends Application {
 
         TextArea textArea2 = new TextArea();
         textArea2.setWrapText(true);
+        textArea2.setFont(font);
+        textArea2.setBackground(new Background(new BackgroundFill(textAreaBackgroundColor, null, null)));
 
         Button processButton2 = new Button("Process");
         Button clearButton2 = new Button("Clear");
+
+
+        processButton2.setFont(font);
+        processButton2.setTextFill(buttonTextColor);
+        processButton2.setBackground(new Background(new BackgroundFill(buttonColor, null, null)));
+
+        clearButton2.setFont(font);
+        clearButton2.setTextFill(buttonTextColor);
+        clearButton2.setBackground(new Background(new BackgroundFill(buttonColor, null, null)));
 
         HBox buttonArea2 = new HBox(10);
         buttonArea2.setPadding(new Insets(2));
@@ -203,13 +253,13 @@ public class Home extends Application {
         treeView2.setRoot(rootItem2);
 
         processButton2.setOnAction(event -> processTextArea(textArea2, treeView2, 1));
-        clearButton2.setOnAction(event -> textArea2.clear());
+        clearButton2.setOnAction(event -> clearTxt(textArea2));
         //compareButton.setOnAction(event -> compareSections());
 
-        textArea2.setMaxHeight(100);
-        treeView2.setMaxHeight(150);
+        textArea2.setMaxHeight(60);
+        treeView2.setMaxHeight(100);
         listView2.setMaxHeight(100);
-        substepListView2.setMaxHeight(150);
+        substepListView2.setMaxHeight(100);
         section2.getChildren().addAll(label2, textArea2, buttonArea2, treeView2, listView2, substepListView2);
 
         inputArea.getChildren().add(section2);
@@ -221,10 +271,16 @@ public class Home extends Application {
 
 
         Button compareButton = new Button("Compare");
+        compareButton.setFont(font);
+        compareButton.setTextFill(buttonTextColor);
+        compareButton.setBackground(new Background(new BackgroundFill(buttonColor, null, null)));
+
         compareButton.setOnAction(event -> compareSections(dmSyncDTOObj1, dmSyncDTOObj2, resultListView));
 
         resultListView = new TextArea();
         resultListView.setWrapText(true);
+        resultListView.setFont(font);
+        resultListView.setBackground(new Background(new BackgroundFill(textAreaBackgroundColor, null, null)));
         //resultListView.setCellFactory(param -> new MultilineListCell());
 
         resultArea.getChildren().addAll(compareButton, resultListView);
@@ -236,10 +292,17 @@ public class Home extends Application {
         scrollPane.setContent(root);
 
         Scene scene = new Scene(scrollPane, 1050, 600);
+        scene.setFill(backgroundColor);
         stage.setScene(scene);
         stage.show();
 
 
+    }
+
+    private void clearTxt(TextArea textArea1) {
+        textArea1.clear();
+        resultListView.clear();
+        sbComparison.delete(0, sbComparison.length());
     }
 
 
@@ -247,57 +310,71 @@ public class Home extends Application {
         // Implement logic to process JSON from textArea and populate the tree view
         // You need to parse the JSON and build the tree structure based on your data
         // For example:
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        try {
-            DMSyncDTO rootNode = mapper.readValue(textArea.getText(), DMSyncDTO.class);
-            if (idx == 0) {
-                dmSyncDTOObj1 = rootNode;
-                treeItemsList1 = new ArrayList<>();
-                treeItemList3 = new ArrayList<>();
-                //System.out.println("Root Node: "+dmSyncDTOObj1.getBaseNodeDTO().getChildList().get(0).getStepList());
-            } else if (idx == 1) {
-                dmSyncDTOObj2 = rootNode;
-                treeItemsList2 = new ArrayList<>();
-                treeItemList4 = new ArrayList<>();
-            }
-            ConstraintNodeDTO baseNodeDTO;
-            baseNodeDTO = rootNode.getBaseNodeDTO();
-            Pattern ptUserCode = Pattern.compile("\\*([0-9]+)#");
-            Matcher mtUserCode = ptUserCode.matcher(rootNode.getBaseNodeDTO().getCode());
-            TreeItem<String> treeBaseNodeDTO;
-            if (mtUserCode.find()) {
-                treeBaseNodeDTO = new TreeItem<>(mtUserCode.group(1) + "P" + baseNodeDTO.getPriority() + " [" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
-            } else {
-                treeBaseNodeDTO = new TreeItem<>(" [" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
-            }
+        if (!(textArea.getText().trim().contentEquals(""))) {
+            treeView.getRoot().getChildren().clear();
+            resultListView.clear();
 
-            treeView.getRoot().getChildren().add(treeBaseNodeDTO);
-            ConstraintNodeDTO cloneItem = baseNodeDTO.clone();
-            cloneItem.setChildList(null);
-
-            if (idx == 0) {
-                if (cloneItem.getStepList() != null) {
-                    //System.out.println("Get Substep DTO: "+cloneItem.getStepList().size());
-                    treeItemList3.add(cloneItem);
-                } else {
-                    treeItemsList1.add(cloneItem);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            try {
+                DMSyncDTO rootNode = mapper.readValue(textArea.getText(), DMSyncDTO.class);
+                if (idx == 0) {
+                    dmSyncDTOObj1 = rootNode;
+                    treeItemsList1 = new ArrayList<>();
+                    treeItemList3 = new ArrayList<>();
+                    //System.out.println("Root Node: "+dmSyncDTOObj1.getBaseNodeDTO().getChildList().get(0).getStepList());
+                } else if (idx == 1) {
+                    dmSyncDTOObj2 = rootNode;
+                    treeItemsList2 = new ArrayList<>();
+                    treeItemList4 = new ArrayList<>();
                 }
-                getTreeItems(baseNodeDTO, treeView.getRoot(), treeItemsList1, treeItemList3);
-            } else {
-                if (cloneItem.getStepList() != null) {
-                    //System.out.println("Get Substep DTO: "+cloneItem.getStepList().size());
-                    treeItemList4.add(cloneItem);
+                ConstraintNodeDTO baseNodeDTO;
+                baseNodeDTO = rootNode.getBaseNodeDTO();
+                Pattern ptUserCode = Pattern.compile("\\*([0-9]+)#");
+                Matcher mtUserCode = ptUserCode.matcher(rootNode.getBaseNodeDTO().getCode());
+                TreeItem<String> treeBaseNodeDTO;
+                if (mtUserCode.find()) {
+                    treeBaseNodeDTO = new TreeItem<>(mtUserCode.group(1) + "P" + baseNodeDTO.getPriority() + " [" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
                 } else {
-                    treeItemsList2.add(cloneItem);
+                    treeBaseNodeDTO = new TreeItem<>(" [" + baseNodeDTO.getCode() + "] " + baseNodeDTO.getName());
                 }
-                getTreeItems(baseNodeDTO, treeView.getRoot(), treeItemsList2, treeItemList4);
+
+                treeView.getRoot().getChildren().add(treeBaseNodeDTO);
+                ConstraintNodeDTO cloneItem = baseNodeDTO.clone();
+                cloneItem.setChildList(null);
+
+                if (idx == 0) {
+                    if (cloneItem.getStepList() != null) {
+                        //System.out.println("Get Substep DTO: "+cloneItem.getStepList().size());
+                        treeItemList3.add(cloneItem);
+                    } else {
+                        treeItemsList1.add(cloneItem);
+                    }
+                    getTreeItems(baseNodeDTO, treeView.getRoot(), treeItemsList1, treeItemList3);
+                } else {
+                    if (cloneItem.getStepList() != null) {
+                        //System.out.println("Get Substep DTO: "+cloneItem.getStepList().size());
+                        treeItemList4.add(cloneItem);
+                    } else {
+                        treeItemsList2.add(cloneItem);
+                    }
+                    getTreeItems(baseNodeDTO, treeView.getRoot(), treeItemsList2, treeItemList4);
+                }
+                //System.out.println("Tree Items List: "+treeItemsList1);
+
+
+            } catch (Exception e) {
+                System.out.println(e.fillInStackTrace());
             }
-            //System.out.println("Tree Items List: "+treeItemsList1);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("JSON is empty");
+            alert.setContentText("Please enter valid json to process");
 
+            // Show the alert and wait for user response
+            alert.showAndWait();
 
-        } catch (Exception e) {
-            System.out.println(e.fillInStackTrace());
         }
 
     }
@@ -497,6 +574,7 @@ public class Home extends Application {
 
 
     private void compareSections(DMSyncDTO dmSyncDTO1, DMSyncDTO dmSyncDTO2, TextArea resultTextArea) {
+        resultTextArea.setText("");
         if (dmSyncDTO1 != null && dmSyncDTO2 != null) {
             //Compare Static Params
             compareConstraintNodeDTO(dmSyncDTO1.getBaseNodeDTO(), dmSyncDTO2.getBaseNodeDTO());
@@ -517,14 +595,14 @@ public class Home extends Application {
             if (constraintNodeDTO1.getCode().equals(constraintNodeDTO2.getCode())) {
                 //Attribute level checks
 
-                if (!(constraintNodeDTO1.getName().equals(constraintNodeDTO2.getName()))) {
-                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Name: |" + constraintNodeDTO1.getName() + "| Obj2 --> Name: |" + constraintNodeDTO2.getName()+"|");
+                if (!(constraintNodeDTO1.getName().contentEquals((constraintNodeDTO2.getName())))) {
+                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Name: |" + constraintNodeDTO1.getName() + "| Obj2 --> Name: |" + constraintNodeDTO2.getName() + "|");
                 }
                 if (!(constraintNodeDTO1.getPriority() == constraintNodeDTO2.getPriority())) {
-                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Priority: |" + constraintNodeDTO1.getPriority() + "| Obj2 --> Priority: |" + constraintNodeDTO2.getPriority()+"|");
+                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Priority: |" + constraintNodeDTO1.getPriority() + "| Obj2 --> Priority: |" + constraintNodeDTO2.getPriority() + "|");
                 }
                 if (!(constraintNodeDTO1.getLevel() == constraintNodeDTO2.getLevel())) {
-                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Level: |" + constraintNodeDTO1.getLevel() + "| Obj2 --> Level: |" + constraintNodeDTO2.getLevel()+"|");
+                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Level: |" + constraintNodeDTO1.getLevel() + "| Obj2 --> Level: |" + constraintNodeDTO2.getLevel() + "|");
 
                 }
 
@@ -533,12 +611,12 @@ public class Home extends Application {
                     //Skip
                 } else {
                     if (constraintNodeDTO1.getPolicy() == null && constraintNodeDTO2.getPolicy() != null) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + "| obj1 --> Policy: |" + constraintNodeDTO1.getPolicy() + "| Obj2 --> Policy: |" + constraintNodeDTO2.getPolicy()+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + "| obj1 --> Policy: |" + constraintNodeDTO1.getPolicy() + "| Obj2 --> Policy: |" + constraintNodeDTO2.getPolicy() + "|");
                     }
                     if (constraintNodeDTO1.getPolicy() != null && constraintNodeDTO2.getPolicy() == null) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Policy: |" + constraintNodeDTO1.getPolicy() + "| Obj2 --> Policy: |" + constraintNodeDTO2.getPolicy()+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Policy: |" + constraintNodeDTO1.getPolicy() + "| Obj2 --> Policy: |" + constraintNodeDTO2.getPolicy() + "|");
                     } else if (!(constraintNodeDTO1.getPolicy().equals(constraintNodeDTO2.getPolicy()))) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Policy: |" + constraintNodeDTO1.getPolicy() + "| Obj2 --> Policy: |" + constraintNodeDTO2.getPolicy()+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Policy: |" + constraintNodeDTO1.getPolicy() + "| Obj2 --> Policy: |" + constraintNodeDTO2.getPolicy() + "|");
                     }
                 }
                 //Action Check with Nulls
@@ -546,41 +624,41 @@ public class Home extends Application {
                     //Skip
                 } else {
                     if (constraintNodeDTO1.getAction() == null && constraintNodeDTO2.getAction() != null) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Action: |" + constraintNodeDTO1.getAction() + "| Obj2 --> Action: |" + constraintNodeDTO2.getAction()+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Action: |" + constraintNodeDTO1.getAction() + "| Obj2 --> Action: |" + constraintNodeDTO2.getAction() + "|");
                     }
                     if (constraintNodeDTO1.getAction() != null && constraintNodeDTO2.getAction() == null) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Action: |" + constraintNodeDTO1.getAction() + "| Obj2 --> Action: |" + constraintNodeDTO2.getAction()+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Action: |" + constraintNodeDTO1.getAction() + "| Obj2 --> Action: |" + constraintNodeDTO2.getAction() + "|");
                     } else if (!(constraintNodeDTO1.getAction().equals(constraintNodeDTO2.getAction()))) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Action: |" + constraintNodeDTO1.getAction() + "| Obj2 --> Action: |" + constraintNodeDTO2.getAction()+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Action: |" + constraintNodeDTO1.getAction() + "| Obj2 --> Action: |" + constraintNodeDTO2.getAction() + "|");
                     }
                 }
                 if (!(constraintNodeDTO1.getProductId() == constraintNodeDTO2.getProductId())) {
-                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Product ID: |" + constraintNodeDTO1.getProductId() + "| Obj2 --> Product ID: |" + constraintNodeDTO2.getProductId()+"|");
+                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Product ID: |" + constraintNodeDTO1.getProductId() + "| Obj2 --> Product ID: |" + constraintNodeDTO2.getProductId() + "|");
                 }
                 //Entity Value Check with Nulls
                 if (constraintNodeDTO1.getEntityValue() == null && constraintNodeDTO2.getEntityValue() == null) {
                     //Skip
                 } else {
                     if (constraintNodeDTO1.getEntityValue() == null && constraintNodeDTO2.getEntityValue() != null) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Entity Value: |" + constraintNodeDTO1.getEntityValue() + "| Obj2 --> Entity Value: |" + constraintNodeDTO2.getEntityValue()+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Entity Value: |" + constraintNodeDTO1.getEntityValue() + "| Obj2 --> Entity Value: |" + constraintNodeDTO2.getEntityValue() + "|");
                     }
                     if (constraintNodeDTO1.getEntityValue() != null && constraintNodeDTO2.getEntityValue() == null) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Entity Value: |" + constraintNodeDTO1.getEntityValue() + "| Obj2 --> Entity Value: |" + constraintNodeDTO2.getEntityValue()+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Entity Value: |" + constraintNodeDTO1.getEntityValue() + "| Obj2 --> Entity Value: |" + constraintNodeDTO2.getEntityValue() + "|");
                     } else if (!(constraintNodeDTO1.getEntityValue().equals(constraintNodeDTO2.getEntityValue()))) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Entity Value: |" + constraintNodeDTO1.getEntityValue() + "| Obj2 --> Entity Value: |" + constraintNodeDTO2.getEntityValue()+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Entity Value: |" + constraintNodeDTO1.getEntityValue() + "| Obj2 --> Entity Value: |" + constraintNodeDTO2.getEntityValue() + "|");
                     }
                 }
                 if (constraintNodeDTO1.getAddInfo().equals(constraintNodeDTO2.getAddInfo())) {
                     //Skip
                 } else {
                     if (!(constraintNodeDTO1.getAddInfo().getAddInfoMap().get("ARABIC_DISPLAY_NAME").contentEquals((constraintNodeDTO2.getAddInfo().getAddInfoMap().get("ARABIC_DISPLAY_NAME"))))) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> ARABIC_DISPLAY_NAME: |" + constraintNodeDTO1.getAddInfo().getAddInfoMap().get("ARABIC_DISPLAY_NAME") + "| Obj2 --> ARABIC_DISPLAY_NAME: |" + constraintNodeDTO2.getAddInfo().getAddInfoMap().get("ARABIC_DISPLAY_NAME")+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> ARABIC_DISPLAY_NAME: |" + constraintNodeDTO1.getAddInfo().getAddInfoMap().get("ARABIC_DISPLAY_NAME") + "| Obj2 --> ARABIC_DISPLAY_NAME: |" + constraintNodeDTO2.getAddInfo().getAddInfoMap().get("ARABIC_DISPLAY_NAME") + "|");
                     }
                     if (!(constraintNodeDTO1.getAddInfo().getAddInfoMap().get("HINDI_DISPLAY_NAME").contentEquals((constraintNodeDTO2.getAddInfo().getAddInfoMap().get("HINDI_DISPLAY_NAME"))))) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> HINDI_DISPLAY_NAME: |" + constraintNodeDTO1.getAddInfo().getAddInfoMap().get("HINDI_DISPLAY_NAME") + "| Obj2 --> HINDI_DISPLAY_NAME: |" + constraintNodeDTO2.getAddInfo().getAddInfoMap().get("HINDI_DISPLAY_NAME")+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> HINDI_DISPLAY_NAME: |" + constraintNodeDTO1.getAddInfo().getAddInfoMap().get("HINDI_DISPLAY_NAME") + "| Obj2 --> HINDI_DISPLAY_NAME: |" + constraintNodeDTO2.getAddInfo().getAddInfoMap().get("HINDI_DISPLAY_NAME") + "|");
                     }
                     if (!(constraintNodeDTO1.getAddInfo().getAddInfoMap().get("OTHERLANGUAGE_DISPLAY_NAME").contentEquals((constraintNodeDTO2.getAddInfo().getAddInfoMap().get("OTHERLANGUAGE_DISPLAY_NAME"))))) {
-                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> OTHERLANGUAGE_DISPLAY_NAME: |" + constraintNodeDTO1.getAddInfo().getAddInfoMap().get("OTHERLANGUAGE_DISPLAY_NAME") + "| Obj2 --> OTHERLANGUAGE_DISPLAY_NAME: |" + constraintNodeDTO2.getAddInfo().getAddInfoMap().get("OTHERLANGUAGE_DISPLAY_NAME")+"|");
+                        sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> OTHERLANGUAGE_DISPLAY_NAME: |" + constraintNodeDTO1.getAddInfo().getAddInfoMap().get("OTHERLANGUAGE_DISPLAY_NAME") + "| Obj2 --> OTHERLANGUAGE_DISPLAY_NAME: |" + constraintNodeDTO2.getAddInfo().getAddInfoMap().get("OTHERLANGUAGE_DISPLAY_NAME") + "|");
                     }
 
 
@@ -610,26 +688,26 @@ public class Home extends Application {
                                 for (ConstraintStepDTO constraintStepDTO2 : constraintNodeDTO2.getStepList()) {
                                     if (constraintStepDTO1.getOrderValue() == constraintStepDTO2.getOrderValue()) {
                                         if (!(constraintStepDTO1.getOperator().contentEquals(constraintStepDTO1.getOperator()))) {
-                                            sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Step Conditions: Operator is: |" + constraintStepDTO1.getOperator() + "| obj2 --> Constraint Step Conditions: Operator is: |" + constraintStepDTO2.getOperator()+"|");
+                                            sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Step Conditions: Operator is: |" + constraintStepDTO1.getOperator() + "| obj2 --> Constraint Step Conditions: Operator is: |" + constraintStepDTO2.getOperator() + "|");
                                         }
                                         if (constraintStepDTO1.getSubStepDTOList().size() == constraintStepDTO2.getSubStepDTOList().size() && constraintStepDTO2.getSubStepDTOList().size() != 0) {
                                             for (int i = 0; i < constraintStepDTO1.getSubStepDTOList().size(); i++) {
                                                 //System.out.println("\nSubstep: obj1: "+constraintStepDTO1.getSubStepDTOList().get(i).getSubStepConstraintId()+" with"+ constraintStepDTO2.getSubStepDTOList().get(i).getSubStepConstraintId());
                                                 //sbComparison.append("\nSubstep: obj1: "+constraintStepDTO1.getSubStepDTOList().get(i).getSubStepConstraintId()+" with"+ constraintStepDTO2.getSubStepDTOList().get(i).getSubStepConstraintId());
                                                 if (!(constraintStepDTO1.getSubStepDTOList().get(i).getOperator().contentEquals(constraintStepDTO2.getSubStepDTOList().get(i).getOperator()))) {
-                                                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Sub-step Conditions: Operator is: |" + constraintStepDTO1.getSubStepDTOList().get(i).getOperator() + "| Obj2 --> Constraint Sub-step Conditions: Operator is: |" + constraintStepDTO2.getSubStepDTOList().get(i).getOperator()+"|");
+                                                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Sub-step Conditions: Operator is: |" + constraintStepDTO1.getSubStepDTOList().get(i).getOperator() + "| Obj2 --> Constraint Sub-step Conditions: Operator is: |" + constraintStepDTO2.getSubStepDTOList().get(i).getOperator() + "|");
                                                 }
                                                 if (!(constraintStepDTO1.getSubStepDTOList().get(i).getPossibleValues().contentEquals(constraintStepDTO2.getSubStepDTOList().get(i).getPossibleValues()))) {
-                                                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Sub-step Conditions: PossibleValues is: |" + constraintStepDTO1.getSubStepDTOList().get(i).getPossibleValues() + "| Obj2 --> Constraint Sub-step Conditions: Possible Values is: |" + constraintStepDTO2.getSubStepDTOList().get(i).getPossibleValues()+"|");
+                                                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Sub-step Conditions: PossibleValues is: |" + constraintStepDTO1.getSubStepDTOList().get(i).getPossibleValues() + "| Obj2 --> Constraint Sub-step Conditions: Possible Values is: |" + constraintStepDTO2.getSubStepDTOList().get(i).getPossibleValues() + "|");
                                                 }
                                                 if (!(constraintStepDTO1.getSubStepDTOList().get(i).getCommandName().contentEquals(constraintStepDTO2.getSubStepDTOList().get(i).getCommandName()))) {
-                                                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Sub-step Conditions: CommandName is: |" + constraintStepDTO1.getSubStepDTOList().get(i).getCommandName() + "| Obj2 --> Constraint Sub-step Conditions: CommandName is: |" + constraintStepDTO2.getSubStepDTOList().get(i).getCommandName()+"|");
+                                                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Sub-step Conditions: CommandName is: |" + constraintStepDTO1.getSubStepDTOList().get(i).getCommandName() + "| Obj2 --> Constraint Sub-step Conditions: CommandName is: |" + constraintStepDTO2.getSubStepDTOList().get(i).getCommandName() + "|");
                                                 }
                                                 if (!(constraintStepDTO1.getSubStepDTOList().get(i).getConditionName().contentEquals(constraintStepDTO2.getSubStepDTOList().get(i).getConditionName()))) {
-                                                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Sub-step Conditions: ConditionName is: |" + constraintStepDTO1.getSubStepDTOList().get(i).getConditionName() + "| Obj2 --> Constraint Sub-step Conditions: ConditionName is: |" + constraintStepDTO2.getSubStepDTOList().get(i).getConditionName()+"|");
+                                                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Sub-step Conditions: ConditionName is: |" + constraintStepDTO1.getSubStepDTOList().get(i).getConditionName() + "| Obj2 --> Constraint Sub-step Conditions: ConditionName is: |" + constraintStepDTO2.getSubStepDTOList().get(i).getConditionName() + "|");
                                                 }
                                                 if (!(constraintStepDTO1.getSubStepDTOList().get(i).getFullyQualifiedPath().contentEquals(constraintStepDTO2.getSubStepDTOList().get(i).getFullyQualifiedPath()))) {
-                                                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Sub-step Conditions: FullyQualifiedPath is: |" + constraintStepDTO1.getSubStepDTOList().get(i).getFullyQualifiedPath() + "| Obj2 --> Constraint Sub-step Conditions: FullyQualifiedPath is: |" + constraintStepDTO2.getSubStepDTOList().get(i).getFullyQualifiedPath()+"|");
+                                                    sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Constraint Sub-step Conditions: FullyQualifiedPath is: |" + constraintStepDTO1.getSubStepDTOList().get(i).getFullyQualifiedPath() + "| Obj2 --> Constraint Sub-step Conditions: FullyQualifiedPath is: |" + constraintStepDTO2.getSubStepDTOList().get(i).getFullyQualifiedPath() + "|");
                                                 }
                                             }
                                         }
