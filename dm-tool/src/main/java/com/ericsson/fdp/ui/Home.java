@@ -697,6 +697,8 @@ public class Home extends Application {
                                                             for (int j = 0; j < constraintStepDTO1.getSubStepDTOList().size(); j++) {
                                                                 if (i != j) {
                                                                     match = matchStepByIndex(constraintNodeDTO1.getCode(), constraintStepDTO1, i, constraintStepDTO2, j, false);
+                                                                    if(match)
+                                                                        break;
                                                                 }
                                                             }
                                                             if (match == false) {
@@ -751,7 +753,7 @@ public class Home extends Application {
                             sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Has " + obj1Map.keySet().size() + " steps which has " + obj1Map.values() + " substeps respectively  vs obj2 --> Has " + obj2Map.keySet().size() + " steps which has " + obj2Map.values() + " substeps");
                         }
 
-                    }else if(constraintNodeDTO1.getStepList().size() != constraintNodeDTO2.getStepList().size()){
+                    } else if (constraintNodeDTO1.getStepList().size() != constraintNodeDTO2.getStepList().size()) {
                         sbComparison.append("\n|| Diff found " + constraintNodeDTO1.getCode() + " obj1 --> Has " + constraintNodeDTO1.getStepList().size() + " steps  vs obj2 --> Has " + constraintNodeDTO2.getStepList().size() + " steps");
                     }
                 }
@@ -830,30 +832,72 @@ public class Home extends Application {
 
     private boolean matchStepByIndex(String code, ConstraintStepDTO constraintStepDTO1, int idx1, ConstraintStepDTO constaintStepDTO2, int idx2, boolean printInd) {
         boolean match = true;
-        if (!(constraintStepDTO1.getSubStepDTOList().get(idx1).getOperator().contentEquals(constaintStepDTO2.getSubStepDTOList().get(idx2).getOperator()))) {
-            match = false;
-            if (printInd)
-                sbComparison.append("\n|| Diff found " + code + " obj1 --> Constraint Sub-step Conditions: Operator is: |" + constraintStepDTO1.getSubStepDTOList().get(idx1).getOperator() + "| Obj2 --> Constraint Sub-step Conditions: Operator is: |" + constaintStepDTO2.getSubStepDTOList().get(idx2).getOperator() + "|");
+        if ((constraintStepDTO1.getSubStepDTOList().get(idx1).getOperator() != null && constaintStepDTO2.getSubStepDTOList().get(idx2).getOperator() != null)){
+            if (!(constraintStepDTO1.getSubStepDTOList().get(idx1).getOperator().contentEquals(constaintStepDTO2.getSubStepDTOList().get(idx2).getOperator()))) {
+                match = false;
+                if (printInd)
+                    sbComparison.append("\n|| Diff found " + code + " obj1 --> Constraint Sub-step Conditions: Operator is: |" + constraintStepDTO1.getSubStepDTOList().get(idx1).getOperator() + "| Obj2 --> Constraint Sub-step Conditions: Operator is: |" + constaintStepDTO2.getSubStepDTOList().get(idx2).getOperator() + "|");
+            }
+        }else{
+
+            if(constraintStepDTO1.getSubStepDTOList().get(idx1).getOperator() == null && constaintStepDTO2.getSubStepDTOList().get(idx2).getOperator() == null){
+
+            }else{
+                match = false;
+            }
+
         }
-        if (!(constraintStepDTO1.getSubStepDTOList().get(idx1).getPossibleValues().contentEquals(constaintStepDTO2.getSubStepDTOList().get(idx2).getPossibleValues()))) {
-            match = false;
-            if (printInd)
-                sbComparison.append("\n|| Diff found " + code + " obj1 --> Constraint Sub-step Conditions: PossibleValues is: |" + constraintStepDTO1.getSubStepDTOList().get(idx1).getPossibleValues() + "| Obj2 --> Constraint Sub-step Conditions: Possible Values is: |" + constaintStepDTO2.getSubStepDTOList().get(idx2).getPossibleValues() + "|");
+        if ((constraintStepDTO1.getSubStepDTOList().get(idx1).getPossibleValues() != null && constaintStepDTO2.getSubStepDTOList().get(idx2).getPossibleValues() != null)) {
+            if (!(constraintStepDTO1.getSubStepDTOList().get(idx1).getPossibleValues().contentEquals(constaintStepDTO2.getSubStepDTOList().get(idx2).getPossibleValues()))) {
+                match = false;
+                if (printInd)
+                    sbComparison.append("\n|| Diff found " + code + " obj1 --> Constraint Sub-step Conditions: PossibleValues is: |" + constraintStepDTO1.getSubStepDTOList().get(idx1).getPossibleValues() + "| Obj2 --> Constraint Sub-step Conditions: Possible Values is: |" + constaintStepDTO2.getSubStepDTOList().get(idx2).getPossibleValues() + "|");
+            }
+        }else{
+            if(constraintStepDTO1.getSubStepDTOList().get(idx1).getPossibleValues() == null && constaintStepDTO2.getSubStepDTOList().get(idx2).getPossibleValues() == null){
+
+            }else{
+                match = false;
+            }
         }
-        if (!(constraintStepDTO1.getSubStepDTOList().get(idx1).getCommandName().contentEquals(constaintStepDTO2.getSubStepDTOList().get(idx2).getCommandName()))) {
-            match = false;
-            if (printInd)
-                sbComparison.append("\n|| Diff found " + code + " obj1 --> Constraint Sub-step Conditions: CommandName is: |" + constraintStepDTO1.getSubStepDTOList().get(idx1).getCommandName() + "| Obj2 --> Constraint Sub-step Conditions: CommandName is: |" + constaintStepDTO2.getSubStepDTOList().get(idx2).getCommandName() + "|");
+        if ((constraintStepDTO1.getSubStepDTOList().get(idx1).getCommandName() != null && constaintStepDTO2.getSubStepDTOList().get(idx2).getCommandName() != null)) {
+            if (!(constraintStepDTO1.getSubStepDTOList().get(idx1).getCommandName().contentEquals(constaintStepDTO2.getSubStepDTOList().get(idx2).getCommandName()))) {
+                match = false;
+                if (printInd)
+                    sbComparison.append("\n|| Diff found " + code + " obj1 --> Constraint Sub-step Conditions: CommandName is: |" + constraintStepDTO1.getSubStepDTOList().get(idx1).getCommandName() + "| Obj2 --> Constraint Sub-step Conditions: CommandName is: |" + constaintStepDTO2.getSubStepDTOList().get(idx2).getCommandName() + "|");
+            }
+        }else{
+            if(constraintStepDTO1.getSubStepDTOList().get(idx1).getCommandName() == null && constaintStepDTO2.getSubStepDTOList().get(idx2).getCommandName() == null){
+
+            }else{
+                match = false;
+            }
         }
-        if (!(constraintStepDTO1.getSubStepDTOList().get(idx1).getConditionName().contentEquals(constaintStepDTO2.getSubStepDTOList().get(idx2).getConditionName()))) {
-            match = false;
-            if (printInd)
-                sbComparison.append("\n|| Diff found " + code + " obj1 --> Constraint Sub-step Conditions: ConditionName is: |" + constraintStepDTO1.getSubStepDTOList().get(idx1).getConditionName() + "| Obj2 --> Constraint Sub-step Conditions: ConditionName is: |" + constaintStepDTO2.getSubStepDTOList().get(idx2).getConditionName() + "|");
+        if ((constraintStepDTO1.getSubStepDTOList().get(idx1).getConditionName() != null && constaintStepDTO2.getSubStepDTOList().get(idx2).getConditionName() != null)){
+            if (!(constraintStepDTO1.getSubStepDTOList().get(idx1).getConditionName().contentEquals(constaintStepDTO2.getSubStepDTOList().get(idx2).getConditionName()))) {
+                match = false;
+                if (printInd)
+                    sbComparison.append("\n|| Diff found " + code + " obj1 --> Constraint Sub-step Conditions: ConditionName is: |" + constraintStepDTO1.getSubStepDTOList().get(idx1).getConditionName() + "| Obj2 --> Constraint Sub-step Conditions: ConditionName is: |" + constaintStepDTO2.getSubStepDTOList().get(idx2).getConditionName() + "|");
+            }
+        }else{
+            if(constraintStepDTO1.getSubStepDTOList().get(idx1).getConditionName() == null && constaintStepDTO2.getSubStepDTOList().get(idx2).getConditionName() == null){
+
+            }else{
+                match = false;
+            }
         }
-        if (!(constraintStepDTO1.getSubStepDTOList().get(idx1).getFullyQualifiedPath().contentEquals(constaintStepDTO2.getSubStepDTOList().get(idx2).getFullyQualifiedPath()))) {
-            match = false;
-            if (printInd)
-                sbComparison.append("\n|| Diff found " + code + " obj1 --> Constraint Sub-step Conditions: FullyQualifiedPath is: |" + constraintStepDTO1.getSubStepDTOList().get(idx1).getFullyQualifiedPath() + "| Obj2 --> Constraint Sub-step Conditions: FullyQualifiedPath is: |" + constaintStepDTO2.getSubStepDTOList().get(idx2).getFullyQualifiedPath() + "|");
+        if ((constraintStepDTO1.getSubStepDTOList().get(idx1).getFullyQualifiedPath() != null && constaintStepDTO2.getSubStepDTOList().get(idx2).getFullyQualifiedPath() != null)){
+            if (!(constraintStepDTO1.getSubStepDTOList().get(idx1).getFullyQualifiedPath().contentEquals(constaintStepDTO2.getSubStepDTOList().get(idx2).getFullyQualifiedPath()))) {
+                match = false;
+                if (printInd)
+                    sbComparison.append("\n|| Diff found " + code + " obj1 --> Constraint Sub-step Conditions: FullyQualifiedPath is: |" + constraintStepDTO1.getSubStepDTOList().get(idx1).getFullyQualifiedPath() + "| Obj2 --> Constraint Sub-step Conditions: FullyQualifiedPath is: |" + constaintStepDTO2.getSubStepDTOList().get(idx2).getFullyQualifiedPath() + "|");
+            }
+        }else{
+            if(constraintStepDTO1.getSubStepDTOList().get(idx1).getFullyQualifiedPath() == null && constaintStepDTO2.getSubStepDTOList().get(idx2).getFullyQualifiedPath() == null){
+
+            }else{
+                match = false;
+            }
         }
         return match;
     }
